@@ -101,6 +101,8 @@
               class="blueBug"
               @click="addSetMeal(scope.row.id)"
             >
+<!--              @click="addSetMeal(scope.row.id)"-->
+
               修改
             </el-button>
             <el-button
@@ -117,6 +119,7 @@
               class="delBut non"
               @click="deleteHandle('单删', scope.row.id)"
             >
+<!--            @click="deleteHandle('单删', scope.row.id)"-->
               删除
             </el-button>
           </template>
@@ -203,9 +206,9 @@
           },
 
           // 删除
-          deleteHandle (type, id) {
-            if (type === '批量' && id === null) {
-              if (this.checkList.length === 0) {
+          deleteHandle (type, id) {//deleteHandle (type, id)
+            if (type === '批量' && id === null) {//if (type === '批量' && id === null)
+              if (this.checkList.length == 0) {//this.checkList.length == 0)
                 return this.$message.error('请选择删除对象')
               }
             }
@@ -231,7 +234,7 @@
             let params = {}
             if (typeof row === 'string' ){
               if (this.checkList.length == 0){
-                this.$message.error('批量操作，请先勾选操作菜品！')
+                this.$message.error('批量操作，请先勾选操作套餐！')
                 return false
               }
               params.ids = this.checkList.join(',')

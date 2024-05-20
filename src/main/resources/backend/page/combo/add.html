@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>新增页面</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
     <link rel="stylesheet" href="../../styles/common.css" />
@@ -332,7 +332,8 @@
                 :key="ind"
                 class="item"
               >
-                <span>{{ item.dishName }}</span>
+<!--                <span>{{ item.dishName }}</span>-->
+                <span>{{ item.name }}</span>
                 <span class="price">￥ {{ Number(item.price)/100 }} </span>
                 <span
                   class="del"

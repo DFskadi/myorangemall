@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -25,8 +27,11 @@ public class AddressBookController {
      * @return
      */
     @PostMapping
-    public R<AddressBook> save(@RequestBody AddressBook addressBook){
-        addressBook.setUserId(BaseContext.getetCurrentId());
+    public R<AddressBook> save(@RequestBody AddressBook addressBook,HttpServletRequest request){
+        Long userId =(Long) request.getSession().getAttribute("user");
+        addressBook.setUserId(userId);
+//        addressBook.setCreateTime(LocalDateTime.now());
+//        addressBook.setCreateUser(userId);
         addressBookService.save(addressBook);
         return R.success(addressBook);
     }
@@ -36,19 +41,11 @@ public class AddressBookController {
      * @param addressBook
      * @return
      */
-    @PutMapping("default")
-    public R<AddressBook> setDefault(@RequestBody AddressBook addressBook){
-        LambdaUpdateWrapper<AddressBook> wrapper =new LambdaUpdateWrapper<>();
-        wrapper.eq(AddressBook::getUserId, BaseContext.getetCurrentId());
-        wrapper.set(AddressBook::getIsDefault,0);
-        //默认地址只能有一个，先将用户设置的所有地址信息is_default字段置为0
-        //SQL:update address_book set is_default =0 where user_id=?
-        addressBookService.update(wrapper);
-        addressBook.setIsDefault(1);
-        //SQL:update address_book set is_default =1 where user_id=?
-        addressBookService.updateById(addressBook);
-
-        return R.success(addressBook);
+    @PutMapping("/default")
+    public R<AddressBook> setDefault(@RequestBody AddressBook addressBook,HttpServletRequest request){
+        Long userId =(Long) request.getSession().getAttribute("user");
+        AddressBook addBook = addressBookService.setDefault(addressBook,userId);
+        return R.success(addBook);
     }
 
 
@@ -63,7 +60,7 @@ public class AddressBookController {
               if(addressBook != null){
                   return R.success(addressBook);
               }else {
-                  return R.error("没有找到该对象");
+                  return R.error("没有查询到地址");
               }
         }
 
@@ -73,14 +70,9 @@ public class AddressBookController {
      */
         @GetMapping("default")
         public R<AddressBook> getDefault(){
-            LambdaQueryWrapper <AddressBook> queryWrapper =new LambdaQueryWrapper<>();
-            queryWrapper.eq(AddressBook::getUserId,BaseContext.getetCurrentId());
-            queryWrapper.eq(AddressBook::getIsDefault,1);
-            //SQL:select * from address_book where user_id=? and   is_default =1
-            AddressBook addressBook =addressBookService.getOne(queryWrapper);
-
+            AddressBook addressBook = addressBookService.getDefault();
             if(null ==addressBook){
-                return R.error("没有找到对象");
+                return R.error("没有查询到地址");
             }else {
                 return R.success(addressBook);
             }
@@ -94,17 +86,35 @@ public class AddressBookController {
      */
     @GetMapping("/list")
     public R<List<AddressBook>> list(AddressBook addressBook){
-            addressBook.setUserId(BaseContext.getetCurrentId());
-
-        //条件构造器
-        LambdaQueryWrapper<AddressBook> queryWrapper =new LambdaQueryWrapper<>();
-        queryWrapper.eq(null!=addressBook.getUserId(),AddressBook::getUserId,addressBook.getUserId());
-        queryWrapper.orderByDesc(AddressBook::getUpdateTime);
-
-        //SQL:select * from address_book where user_id =? order by update_time desc
-        return R.success(addressBookService.list(queryWrapper));
+        List<AddressBook> list = addressBookService.list(addressBook);
+        return R.success(list);
     }
 
+    /**
+     * 删除地址
+     *
+     * @param addrId
+     * @param request
+     * @return
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam("ids")Long addrId,HttpServletRequest request){
+        Long userId =(Long) request.getSession().getAttribute("user");
+        if(addrId==null){
+            return R.error("请求异常");
+        }
+        String str = addressBookService.delete(addrId, userId);
+        return R.success(str);
+    }
+
+    @PutMapping
+    public R<String> update(@RequestBody AddressBook addressBook){
+        if (addressBook==null){
+            return R.error("请求异常");
+        }
+        addressBookService.updateById(addressBook);
+        return R.success("修改成功");
+    }
 
 
 }

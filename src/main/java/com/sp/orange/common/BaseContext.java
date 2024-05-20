@@ -14,6 +14,9 @@ public class BaseContext {
     public static void setCurrentId(Long id){
         threadLocal.set(id);
     }
+    public static void setCurrentUserId(Long id){
+        threadLocal.set(id);
+    }
 
     /**
      * 获取值

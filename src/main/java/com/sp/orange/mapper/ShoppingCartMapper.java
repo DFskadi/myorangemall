@@ -5,5 +5,5 @@ import com.sp.orange.entity.ShoppingCart;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ShoppingCartMapper  extends BaseMapper<ShoppingCart> {
+public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 }
