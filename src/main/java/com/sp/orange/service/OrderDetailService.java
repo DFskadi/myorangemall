@@ -1,8 +1,7 @@
 package com.sp.orange.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sp.orange.entity.OrderDetail;
+import com.sp.orange.model.OrderDetail;
 
 public interface OrderDetailService extends IService<OrderDetail> {
 

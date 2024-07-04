@@ -47,7 +47,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--        CacheManager的扩展-->
+        <!--        CacheManager的扩展  springboot技术提供有内置的缓存解决方案-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
@@ -118,11 +118,7 @@
 
 
 
-<!--        spring-cache坐标-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
+
 
         <!--        项目监控-->
         <dependency>
@@ -141,11 +137,11 @@
 
 <!--        Sharding-JDBC-->
 <!--        测试dev环境记得注释这个jar-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shardingsphere</groupId>-->
-<!--            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>-->
-<!--            <version>4.0.0-RC1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+            <version>4.0.0-RC1</version>
+        </dependency>
 
     </dependencies>
 

@@ -1,6 +1,6 @@
 #login .divHead {
   opacity: 1;
-  background: #333333;
+  background: #fb7299;
   height: 88rem;
   width: 100%;
   font-size: 18rem;
@@ -45,7 +45,7 @@
   font-family: PingFangSC, PingFangSC-Regular;
   font-weight: 400;
   text-align: left;
-  color: #ffc200;
+  color: #fb7299;
   letter-spacing: 0px;
 }
 
@@ -78,7 +78,7 @@
 
 #login .btnNoPhone {
   color: #666666;
-  background: #d8d8d8;
+  background: #00aeec;
 }
 
 #login .btnNoPhone:active {
@@ -86,7 +86,7 @@
 }
 
 #login .btnPhone {
-  background: #ffc200;
+  background: #915c83;
   color: #333333;
 }
 

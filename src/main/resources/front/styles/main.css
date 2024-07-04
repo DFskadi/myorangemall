@@ -24,7 +24,7 @@
   width: 345rem;
   height: 118rem;
   opacity: 1;
-  background: #ffffff;
+  background: #a7998f;
   border-radius: 6rem;
   box-shadow: 0rem 2rem 5rem 0rem rgba(69, 69, 69, 0.1);
   position: absolute;
@@ -102,7 +102,7 @@
 }
 
 #main .divBody .divType {
-  background: #f6f6f6;
+  background: #cbc0b9;
 }
 
 #main .divBody .divType ul {

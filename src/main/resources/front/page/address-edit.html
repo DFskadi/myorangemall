@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-        <title>菩提阁</title>
+        <title>用户地址编辑</title>
         <link rel="icon" href="./../images/favico.ico">
         <!--不同屏幕尺寸根字体设置-->
         <script src="./../js/base.js"></script>
@@ -21,7 +21,7 @@
         <div id="address_edit" class="app">
             <div class="divHead">
                 <div class="divTitle">
-                    <i class="el-icon-arrow-left" @click="goBack"></i>{{title}}
+                    <i class="el-icon-arrow-left" @click="goBack"></i>用户地址编辑
                 </div>
             </div>
             <div class="divContent">
@@ -37,6 +37,7 @@
                     女士
                 </span>
                 </div>
+
                 <div class="divItem">
                     <span>手机号：</span> 
                     <el-input placeholder=" 请填写收货人手机号码" v-model="form.phone"  maxlength='20' style="width: calc(100% - 80rem);"/></el-input>

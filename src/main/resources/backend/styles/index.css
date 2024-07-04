@@ -18,7 +18,8 @@
 }
 .main-container {
   height: 100%;
-  background: #f3f4f7;
+  /*background: #f3f4f7;*/
+  background: #fff0f5;
   position: relative;
   width: calc(100% - 190px);
 }
@@ -61,7 +62,8 @@
   height: 64px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  /*background: #fff;*/
+  background: #ffe7ec;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 .navbar .hamburger-container {
@@ -191,7 +193,8 @@
 
 .logo {
   text-align: center;
-  background-color: rgb(52, 55, 68);
+  /*background-color: rgb(52, 55, 68);*/
+  background-color: rgb(255, 97, 146);
   /* height: 100px;
   line-height: 100px;
   padding: 12px 5px; */
@@ -218,7 +221,9 @@
 .el-submenu > .el-submenu__title,
 .el-submenu .el-menu-item {
   min-width: 190px !important;
-  background-color: #272a36 !important;
+  background-color: #e4406f !important;
+  /*#787878*/
+  /*#272a36*/
 }
 /* .el-submenu > .el-submenu__title:hover, .el-submenu .el-menu-item:hover {
   background-color: #0e132b !important;
@@ -253,9 +258,9 @@
 .el-menu .el-menu-item:active span {
   color: #333333 !important;
 }
-
+/*#ffc200*/
 .el-menu .el-menu-item.is-active {
-  background-color: #ffc200 !important;
+  background-color: #e2e2e2 !important;
   color: #333333 !important;
   border-radius: 0 21px 21px 0 !important;
 }

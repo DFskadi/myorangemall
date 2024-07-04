@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>瑞吉外卖管理端</title>
+    <title>橘子外卖管理端</title>
     <link rel="shortcut icon" href="favicon.ico">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="plugins/element-ui/index.css" />
@@ -31,7 +31,6 @@
         <!-- sidebar -->
         <div class="sidebar-container">
           <div class="logo">
-            <!-- <img src="images/logo.png" width="122.5" alt="" /> -->
             <img src="images/login/login-logo.png" alt="" style="width: 117px; height: 32px" />
           </div>
 
@@ -40,9 +39,10 @@
               :default-active="defAct"
               :unique-opened="false"
               :collapse-transition="false"
-              background-color="#343744"
-              text-color="#bfcbd9"
-              active-text-color="#f4f4f5"
+
+              background-color="#fb7299"
+              text-color="#ffffff"
+              active-text-color="#E8E8A6"
             >
               <div v-for="item in menuList" :key="item.id">
                 <el-submenu :index="item.id" v-if="item.children && item.children.length>0">
@@ -119,9 +119,11 @@
             userInfo: {},
             menuList: [
               // {
-              //   id: '1',
-              //   name: '门店管理',
-              //   children: [
+                // id: '1',
+                // name: '门店管理',
+                // children: [
+
+
                   {
                     id: '2',
                     name: '员工管理',
@@ -131,7 +133,7 @@
                   {
                     id: '3',
                     name: '分类管理',
-                    url: 'page/category/list.html',
+                    url: 'page/classify/list.html',
                     icon: 'icon-category'
                   },
                   {
@@ -151,10 +153,23 @@
                     name: '订单明细',
                     url: 'page/order/list.html',
                     icon: 'icon-order'
-                  }
+                  },
+              //
+              // {
+              //   id: '7',
+              //   name: '其它功能',
+              //   url: 'page/order/list.html',
+              //   icon: 'icon-order'
+              // }
+
               //   ],
               // },
             ],
+
+
+
+
+
             iframeUrl: 'page/member/list.html',
             headTitle: '员工管理',
             goBackFlag: false,

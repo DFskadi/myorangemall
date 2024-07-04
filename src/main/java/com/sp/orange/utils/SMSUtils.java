@@ -87,7 +87,7 @@ public class SMSUtils {
     static final String domain = "dysmsapi.aliyuncs.com";
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
     static final String accessKeyId = "";
-    static final String accessKeySecret ="";
+    static final String accessKeySecret ="";//这里的密钥由于要上传git，为了安全清空
     public static SendSmsResponse sendSms(String signName,String phone , String TemplateCode,String TemplateP) throws ClientException {
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");

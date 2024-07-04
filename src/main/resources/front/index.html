@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-    <title>菩提阁</title>
+    <title>橘子外卖</title>
     <link rel="icon" href="images/favico.ico">
     <!--不同屏幕尺寸根字体设置-->
     <script src="./js/base.js"></script>
@@ -26,19 +26,20 @@
       </div>
       <div class="divTitle">
         <div class="divStatic">
-          <img src="./images/logo.png"  class="logo"/>
+          <img src="./images/logo.png" class="logo"/>
           <div class="divDesc">
-            <div class="divName">菩提阁餐厅</div>
+            <div class="divName">小橘子食堂</div>
             <div class="divSend">
-                <span><img src="./images/time.png"/> 距离1.5km</span>
-                <span><img src="./images/money.png"/> 配送费6元</span>
-                <span><img src="./images/location.png"/> 预计时长12min</span>
+                <span><img src="./images/time.png"/>预计时长30min </span>
+
+                <span><img src="./images/location.png"/> 昆都仑区人气榜第一名</span>
             </div>
           </div>
         </div>
         <div class="divDesc">
-          简介: 菩提阁中餐厅是菩提阁点餐的独立的品牌，定位“大众 化的美食外送餐饮”，旨为顾客打造专业美食。
+          公告：小橘子外卖，为您配送到家。
         </div>
+
       </div>
       <div class="divBody">
         <div class="divType">
@@ -48,7 +49,7 @@
         </div>
         <div class="divMenu">
           <div>
-            <div class="divItem" v-for="(item,index) in dishList" :key="index" @click="dishDetails(item)">
+            <div class="divItem" v-for="(item,index) in cuisineList" :key="index" @click="dishDetails(item)">
               <el-image :src="imgPathConvert(item.image)" >
                 <div slot="error" class="image-slot">
                   <img src="./images/noImg.png"/>
@@ -239,7 +240,7 @@
               activeType:0,
               categoryList:[],
               categoryId:undefined,
-              dishList:[],
+              cuisineList:[],
               cartData:[],
               dialogFlavor:{
                 name:'',
@@ -337,18 +338,18 @@
               }
               const res = await dishListApi({categoryId:this.categoryId,status:1})
               if(res.code === 1){
-                let dishList = res.data
+                let cuisineList = res.data
                 const cartData  = this.cartData
-                if(dishList.length > 0 && cartData.length > 0){
-                  dishList.forEach(dish=>{
+                if(cuisineList.length > 0 && cartData.length > 0){
+                  cuisineList.forEach(cuisine=>{
                     cartData.forEach(cart=>{
-                      if(dish.id === cart.dishId){
-                        dish.number = cart.number
+                      if(cuisine.id === cart.dishId){
+                        cuisine.number = cart.number
                       }
                     })
                   })
                 }
-                this.dishList = dishList
+                this.cuisineList = cuisineList
               }else{
                 this.$notify({ type:'warning', message:res.msg});
               }
@@ -360,18 +361,18 @@
               }
               const res = await setmealListApi({categoryId:this.categoryId,status:1})
               if(res.code === 1){
-                  let dishList = res.data
+                  let cuisineList = res.data
                   const cartData  = this.cartData
-                  if(dishList.length > 0 && cartData.length > 0){
-                    dishList.forEach(dish=>{
+                  if(cuisineList.length > 0 && cartData.length > 0){
+                    cuisineList.forEach(cuisine=>{
                       cartData.forEach(cart=>{
-                        if(dish.id === cart.setmealId){
-                          dish.number = cart.number
+                        if(cuisine.id === cart.setmealId){
+                          cuisine.number = cart.number
                         }
                       })
                     })
                   }
-                  this.dishList = dishList
+                  this.cuisineList = cuisineList
               }else{
                 this.$notify({ type:'warning', message:res.msg});
               }
@@ -402,9 +403,9 @@
               }
               const res = await addCartApi(params)
               if(res.code === 1){
-                this.dishList.forEach(dish=>{
-                  if(dish.id === item.id){
-                    dish.number = res.data.number
+                this.cuisineList.forEach(cuisine=>{
+                  if(cuisine.id === item.id){
+                    cuisine.number = res.data.number
                   }
                 })
                 if(this.setMealDialog.show){
@@ -428,9 +429,9 @@
                 }
                 const res = await updateCartApi(params)
                 if(res.code === 1){
-                this.dishList.forEach(dish=>{
-                  if(dish.id === item.id){
-                    dish.number = (res.data.number === 0 ? undefined : res.data.number)
+                this.cuisineList.forEach(cuisine=>{
+                  if(cuisine.id === item.id){
+                    cuisine.number = (res.data.number === 0 ? undefined : res.data.number)
                   }
                 })
                 if(this.setMealDialog.show){
@@ -460,12 +461,12 @@
               }
               const res = await addCartApi(params)
               if(res.code === 1){
-                this.dishList.forEach(dish=>{
-                  if(dish.id === (item.dishId || item.setmealId)){
-                    dish.number = res.data.number
+                this.cuisineList.forEach(cuisine=>{
+                  if(cuisine.id === (item.dishId || item.setmealId)){
+                    cuisine.number = res.data.number
                   }
                 })
-                console.log(this.dishList)
+                console.log(this.cuisineList)
                 this.getCartData()
               }else{
                 this.$notify({ type:'warning', message:res.msg});
@@ -479,9 +480,9 @@
                 }
                 const res = await updateCartApi(params)
                 if(res.code === 1){
-                this.dishList.forEach(dish=>{
-                  if(dish.id === (item.dishId || item.setmealId)){
-                    dish.number = (res.data.number === 0 ? undefined : res.data.number)
+                this.cuisineList.forEach(cuisine=>{
+                  if(cuisine.id === (item.dishId || item.setmealId)){
+                    cuisine.number = (res.data.number === 0 ? undefined : res.data.number)
                   }
                 })
                 this.getCartData()
@@ -492,7 +493,7 @@
             
             //修改商品列表中的数据number
             changeDishList(item){
-              for(let ele of this.dishList){
+              for(let ele of this.cuisineList){
                 if(ele.id === (item.setmealId || item.dishId)){
                   ele.number = item.number
                 }
@@ -503,7 +504,7 @@
             async clearCart(){
                 const res = await clearCartApi()
                 if(res.code === 1){
-                  for(let ele of this.dishList){
+                  for(let ele of this.cuisineList){
                     ele.number = undefined
                   }
                   this.cartData = []

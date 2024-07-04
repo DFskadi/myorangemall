@@ -2,7 +2,7 @@ package com.sp.orange.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sp.orange.entity.Orders;
+import com.sp.orange.model.Orders;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderService extends IService<Orders> {

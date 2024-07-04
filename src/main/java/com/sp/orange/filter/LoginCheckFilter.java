@@ -33,8 +33,8 @@ public class LoginCheckFilter implements Filter {
         log.info("拦截到请求：{}",requestURI);
 
         String[] urls=new String[] {//  /backend/index.html无法通过/**匹配匹配到,使用AntPathMatcher
-                "/employee/login",
-                "/employee/logout",
+                "/staff/login",
+                "/staff/logout",
                 "/backend/**",
                 "/front/**",
                 "/common/**",
@@ -43,8 +43,8 @@ public class LoginCheckFilter implements Filter {
                 "/doc.html",
                 "/webjars/**",
                 "/swagger-resources",
-                "/v2/api-docs"
-
+                "/v2/api-docs",
+                "/actuator/**"
         };//这里放的是不需要处理的请求
 
 
@@ -58,14 +58,17 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
+
 //        4-1.判断登录状态，如果已登录。则直接放行
-        if(request.getSession().getAttribute("employee") != null){
-            log.info("员工已登录，员工id为：{}",request.getSession().getAttribute("employee"));
-           Long empId =(Long) request.getSession().getAttribute("employee");
+        if(request.getSession().getAttribute("staff") != null){
+            log.info("员工已登录，员工id为：{}",request.getSession().getAttribute("staff"));
+           Long empId =(Long) request.getSession().getAttribute("staff");
             BaseContext.setCurrentId(empId);
             filterChain.doFilter(request,response);
             return;
         }
+
+
 
         //        4-2.判断登录状态，如果已登录。则直接放行
         if(request.getSession().getAttribute("user") != null){

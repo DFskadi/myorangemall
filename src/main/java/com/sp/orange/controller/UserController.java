@@ -1,11 +1,9 @@
 package com.sp.orange.controller;
 
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.sp.orange.common.BaseContext;
 import com.sp.orange.common.R;
-import com.sp.orange.entity.User;
+import com.sp.orange.model.User;
 import com.sp.orange.service.UserService;
 import com.sp.orange.utils.SMSUtils;
 import com.sp.orange.utils.ValidateCodeUtils;
@@ -14,13 +12,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -44,15 +39,15 @@ public class UserController {
 
         if (StringUtils.isNotEmpty(phone)) {
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
-            log.info(code);
+//            log.info(code);
             String TemplateParam = "{\"code\":\"" + code + "\"}";//短信的验证码
             //功能需要付费暂不开启
 
-//            try {
-//                SMSUtils.sendSms("orangemall",phone,"SMS_465715611",TemplateParam);
-//            } catch (ClientException e) {
-//                throw new RuntimeException(e);
-//            }
+            try {
+                SMSUtils.sendSms("orangemall",phone,"SMS_465715611",TemplateParam);
+            } catch (ClientException e) {
+                throw new RuntimeException(e);
+            }
 
             //需要将生成的验证码保存到Session中（优化为缓存Session参数也不需要了）
 //            session.setAttribute(phone,code);
@@ -93,7 +88,7 @@ public class UserController {
                 //判断当前手机号对应的用户是否为新用户，如果是新用户就自动完成注册
                 user = new User();
                 user.setPhone(phone);
-                user.setStatus(1);
+                //user.setStatus(1);
                 userService.save(user);
             }
 

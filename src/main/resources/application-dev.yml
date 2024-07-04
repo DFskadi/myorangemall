@@ -10,7 +10,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test01?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/test02?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 1234
   redis:
@@ -36,8 +36,15 @@ mybatis-plus:
       logic-delete-value: 1 #逻辑已删除值(默认为1)
       logic-not-delete-value: 0 #逻辑未删除值(默认为0)
 
+#记得将请求放行
+management:
+  endpoint:
+    health:
+      show-details: always
+
+
 orange:
-  path: D:\code\IntelliJ IDEA 2022.2.2\the actul project\mavenproject\myorangemall\src\main\resources\backend\picture\
+  path: D:\code\IntelliJ IDEA 2022.2.2\projectDemo\mavenproject\myorangemall\src\main\resources\backend\picture\
 
 
 

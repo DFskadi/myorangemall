@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sp.orange.common.BaseContext;
 import com.sp.orange.common.CustomException;
 import com.sp.orange.common.R;
-import com.sp.orange.entity.ShoppingCart;
+import com.sp.orange.model.ShoppingCart;
 import com.sp.orange.service.ShopingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j

@@ -1,7 +1,7 @@
 package com.sp.orange.dto;
 
-import com.sp.orange.entity.OrderDetail;
-import com.sp.orange.entity.Orders;
+import com.sp.orange.model.OrderDetail;
+import com.sp.orange.model.Orders;
 import lombok.Data;
 
 import java.util.List;

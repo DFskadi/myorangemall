@@ -3,15 +3,11 @@ package com.sp.orange.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sp.orange.common.BaseContext;
-import com.sp.orange.common.R;
-import com.sp.orange.entity.AddressBook;
+import com.sp.orange.model.AddressBook;
 import com.sp.orange.mapper.AddressBookMapper;
 import com.sp.orange.service.AddressBookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,9 +40,9 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
      * @return
      */
     @Override
-    public AddressBook getDefault() {
+    public AddressBook getDefault(Long userId) {
         LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(AddressBook::getUserId, BaseContext.getetCurrentId());
+        queryWrapper.eq(AddressBook::getUserId, userId);
         queryWrapper.eq(AddressBook::getIsDefault, 1);
         //SQL:select * from address_book where user_id=? and   is_default =1
         AddressBook addressBook = this.getOne(queryWrapper);
@@ -60,11 +56,11 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
      * @return
      */
     @Override
-    public List<AddressBook> list(AddressBook addressBook) {
-        addressBook.setUserId(BaseContext.getetCurrentId());
+    public List<AddressBook> list(AddressBook addressBook,Long userId) {
+        addressBook.setUserId(userId);
         //条件构造器
         LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(null != addressBook.getUserId(), AddressBook::getUserId, addressBook.getUserId());
+        queryWrapper.eq(null != userId, AddressBook::getUserId, userId);
         queryWrapper.orderByDesc(AddressBook::getUpdateTime);
 
         //SQL:select * from address_book where user_id =? order by update_time desc

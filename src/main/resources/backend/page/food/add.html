@@ -77,7 +77,7 @@
               v-model="ruleForm.categoryId"
               placeholder="请选择菜品分类"
             >
-              <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id" />
+              <el-option v-for="(item,index) in cuisineList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
         </div>
@@ -180,6 +180,7 @@
         </el-form-item>
         <div>
         </div>
+
         <div>
           <el-form-item
             label="菜品图片:"
@@ -265,7 +266,7 @@
             value: '',
             imageUrl: '',
             actionType: '',
-            dishList: [],
+            cuisineList: [],
             dishFlavorsData: [],
             dishFlavors: [],
             vueRest : '1',
@@ -391,7 +392,7 @@
           getDishList () {
             getCategoryList({ 'type': 1 }).then(res => {
               if (res.code === 1) {
-                this.dishList = res.data
+                this.cuisineList = res.data
               } else {
                 this.$message.error(res.msg || '操作失败')
               }

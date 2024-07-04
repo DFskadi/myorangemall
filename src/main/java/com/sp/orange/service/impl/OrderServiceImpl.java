@@ -5,30 +5,21 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sp.orange.common.BaseContext;
 import com.sp.orange.common.CustomException;
-import com.sp.orange.common.R;
 import com.sp.orange.dto.OrderDto;
-import com.sp.orange.entity.*;
+import com.sp.orange.model.*;
 import com.sp.orange.mapper.OrderMapper;
 import com.sp.orange.service.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -184,13 +175,17 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         orders.setAmount(new BigDecimal(amount.get()));//总金额
         orders.setUserId(userId);
         orders.setNumber(String.valueOf(orderId));
-        orders.setUserName(user.getName());
+        //orders.setUserName(user.getName());
         orders.setConsignee(addressBook.getConsignee());
         orders.setPhone(addressBook.getPhone());
-        orders.setAddress((addressBook.getProvinceName() == null ? "1" : addressBook.getProvinceName())
-                + (addressBook.getCityName() == null ? "1" : addressBook.getCityName())
-                + (addressBook.getDistrictName() == null ? "1" : addressBook.getDistrictName())
-                + (addressBook.getDetail() == null ? "1" : addressBook.getDetail()));
+        //orders.setAddress((addressBook.getProvinceName() == null ? "1" : addressBook.getProvinceName())
+               // + (addressBook.getCityName() == null ? "1" : addressBook.getCityName())
+               // + (addressBook.getDistrictName() == null ? "1" : addressBook.getDistrictName())
+               // + (addressBook.getDetail() == null ? "1" : addressBook.getDetail()));
+
+        orders.setAddress(addressBook.getDetail() == null ? "1" : addressBook.getDetail());
+
+
 
 
         this.save(orders);
@@ -227,12 +222,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
      */
     @Override
     public String againSubmit(Long orderId,Long userId){
+        //通过用户id把原来的购物车给清空
+        shopingCartService.clean(userId);
+
         LambdaQueryWrapper<OrderDetail> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(OrderDetail::getOrderId,orderId);
         //获取订单对应的所有订单明细
         List<OrderDetail> orderDetailList = orderDetailService.list(queryWrapper);
-        //通过用户id把原来的购物车给清空
-        shopingCartService.clean(userId);
+
         //把从order表中和order_details表中获取的数据赋值给这个购物车对象
            List<ShoppingCart> shoppingCartList = orderDetailList.stream().map((item)->{
             ShoppingCart shoppingCart=new ShoppingCart();
