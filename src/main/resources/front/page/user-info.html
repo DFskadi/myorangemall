@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <title></title>
+    <link rel="icon" href="./../images/favico.ico">
+    <!--不同屏幕尺寸根字体设置-->
+    <script src="./../js/base.js"></script>
+    <!--element-ui的样式-->
+    <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css" />
+    <!--引入vant样式-->
+    <link rel="stylesheet" href="../styles/vant.min.css"/>
+    <!-- 引入样式  -->
+    <link rel="stylesheet" href="../styles/index.css" />
+    <!--本页面内容的样式-->
+    <link rel="stylesheet" href="./../styles/address-edit.css" />
+
+</head>
+<body>
+<div id="address_edit" class="app">
+
+    <div class="divHead">
+        <div class="divTitle">
+            <i class="el-icon-arrow-left" @click="goBack"></i>{{title}}
+        </div>
+    </div>
+    <div class="divContent">
+        <div class="divItem">
+            <span>用户昵称：</span>
+            <el-input placeholder="填写您的新称呼" v-model="form.name"  maxlength='10' class="inputUser"/></el-input>
+            <span class="spanChecked" @click="form.sex = '1'">
+                    <i :class="{iActive:form.sex === '1'}"></i>
+                    先生
+                   </span>
+            <span class="spanChecked" @click="form.sex = '0'">
+                    <i :class="{iActive:form.sex === '0'}"></i>
+                    女士
+                </span>
+        </div>
+
+        <div class="divItem">
+            <span>身份证号：</span>
+            <el-input placeholder=" 请填写身份证号(可不填)"  v-model="form.idNumber"  maxlength='20' style="width: calc(100% - 80rem);"/></el-input>
+        </div>
+
+
+<!--        <div>-->
+
+<!--            <el-upload-->
+<!--                    action="/common/upload"-->
+<!--                    accept="image/jpeg,image/png,image/jpg"-->
+
+<!--                    ref="upload"-->
+<!--                    :show-file-list="false"-->
+<!--                    :on-success="handleAvatarSuccess"-->
+<!--                    style="border-radius: 4px"-->
+<!--            >-->
+<!--                <i class="el-icon-plus" ></i>-->
+<!--                <img style="width: 20px" src="./../../images/add.png" alt="">-->
+
+<!--            </el-upload>-->
+<!--        </div>-->
+
+
+
+<!--        <el-button   size="mini" type="primary" >上传头像</el-button>-->
+<!--&lt;!&ndash;            <div slot="tip" class="el-upload__tip">支持批量上传，上传格式为jpg文件</div>&ndash;&gt;-->
+<!--        <i class="el-icon-plus" ></i>-->
+
+        <div>
+
+            <el-upload
+                    action="/common/upload"
+                    accept="image/jpeg,image/png,image/jpg"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+
+                    list-type="picture"
+
+
+            >
+                <el-button size="mini" type="primary">点击上传</el-button>
+
+            </el-upload>
+        </div>
+
+
+
+
+
+
+
+        <div class="divSave" @click="updateUserinfoApi">保存</div>
+
+    </div>
+
+</div>
+
+
+<!-- 开发环境版本,包含了有帮助的命令行警告 -->
+<script src="../../backend/plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="../../backend/plugins/element-ui/index.js"></script>
+<!-- 引入vant样式 -->
+<script src="./../js/vant.min.js"></script>
+<script src="./../js/common.js"></script>
+<script src="./../api/address.js"></script>
+<script src="./../api/userinfo.js"></script>
+<!-- 引入axios -->
+<script src="../../backend/plugins/axios/axios.min.js"></script>
+<script src="./../js/request.js"></script>
+<script>
+    new Vue({
+        el:"#address_edit",
+        data(){
+            return {
+                title:'修改信息',
+                form:{
+                    name:'',//用户名
+                    idNumber:'',//身份证号
+                    sex:'1',//0表示女 1 表示男
+                    avatar:'',//头像
+
+                },
+                // id:undefined,
+                // activeIndex :0
+            }
+        },
+        computed:{},
+        created(){
+            this.userPhone =sessionStorage.getItem("userPhone")
+            this.init ()
+        },
+        mounted(){
+        },
+        methods:{
+            goBack(){
+                history.go(-1)
+            },
+            async init () {
+                queryUserByPhone(this.userPhone).then(res => {
+                    console.log(res)
+                    if (String(res.code) === '1') {
+                        console.log(res.data)
+                        this.form = res.data
+                        this.form.sex = res.data.sex === '0' ? '女' : '男'
+                        // this.ruleForm.password = ''
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
+            },
+            async updateUserinfoApi(){
+                const form = this.form
+                if(!form.name){
+                    this.$notify({ type:'warning', message:'请输入用户名'});
+                    return
+                }
+                if(!form.idNumber){
+                    this.$notify({ type:'warning', message:'请输入身份证号'});
+                    return
+                }
+
+                const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+                if(!reg.test(form.idNumber)){
+                    this.$notify({ type:'warning', message:'身份证号码不合法'});
+                    return
+                }
+
+                    res = await updateUserinfoApi(this.form)
+
+
+                if(res.code === 1){
+                    window.requestAnimationFrame(()=>{
+                        window.location.replace('/front/page/address.html')
+                    })
+                }else{
+                    this.$notify({ type:'warning', message:res.msg});
+                }
+            },
+
+
+
+        }
+    })
+</script>
+</body>
+</html>
